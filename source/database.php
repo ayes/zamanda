@@ -17,14 +17,17 @@ class kondb
 {
     // silahkan atur sesuai dengan akun database anda
     private 	$db_host        = "localhost";
-    private 	$db_pengguna    = "root";
+    private 	$db_pengguna    = "";
     private 	$db_password    = "";
-    private 	$db_namadb      = "engg1019_akademik";
+    private 	$db_namadb      = "";
     //------------------------------------------------
     
     private 	$query;
     private 	$hasil;
     protected 	$menghubungkan;
+    var $dbprefix		= '';
+    var $_reserved_identifiers	= array('*');
+    var $_escape_char = '`';
     
     function __construct()
 	{	
@@ -46,6 +49,46 @@ class kondb
 			return $this->data;
   		else
 			return false;
+	}
+   function cek()
+  	{
+		if (mysqli_num_rows($this->hasil) > 0)    		
+			return TRUE;
+  		else
+			return FALSE;
+	}
+   function insert($table = '', $data = NULL)
+	{
+		$jumlah_data = sizeof($data);
+                $count = 1;
+                $into = "";
+		foreach ($data as $k => $v) 
+			{
+   				if ($jumlah_data == $count)
+				{
+					$into = $into.$k;
+				}
+				else
+				{
+					$into = $into.$k.",";
+				}
+				$count++;
+			}
+                $count = 1;
+                $value = "";
+		foreach ($data as $k => $v) 
+			{
+   				if ($jumlah_data == $count)
+				{
+					$value = $value."'".$v."'";
+				}
+				else
+				{
+					$value = $value."'".$v."',";
+				}
+				$count++;
+			}
+                 $this->query("INSERT INTO tbmahasiswa ($into) VALUES ($value)");       
 	}
    function close()
   	{
