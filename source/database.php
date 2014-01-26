@@ -17,9 +17,9 @@ class kondb
 {
     // silahkan atur sesuai dengan akun database anda
     private 	$db_host        = "localhost";
-    private 	$db_pengguna    = "";
-    private 	$db_password    = "";
-    private 	$db_namadb      = "";
+    private 	$db_pengguna    = "engg1019_optr";
+    private 	$db_password    = "optr1212";
+    private 	$db_namadb      = "engg1019_akademik";
     //------------------------------------------------
     
     private 	$query;
@@ -88,7 +88,45 @@ class kondb
 				}
 				$count++;
 			}
-                 $this->query("INSERT INTO tbmahasiswa ($into) VALUES ($value)");       
+                 $this->query("INSERT INTO $table ($into) VALUES ($value)");       
+	}
+        function where($idganti, $idvganti)
+        {
+            return $this->value_ganti = "$idganti='$idvganti'";
+        }        
+        function update($table = '', $data = NULL)
+	{
+		$jumlah_data = sizeof($data);
+                $count = 1;
+                $into = "";
+		foreach ($data as $k => $v) 
+			{
+   				if ($jumlah_data == $count)
+				{
+					$into = $into.$k;
+				}
+				else
+				{
+					$into = $into.$k.",";
+				}
+				$count++;
+			}
+                $count = 1;
+                $value = "";
+		foreach ($data as $k => $v) 
+			{
+                                if ($jumlah_data == $count)
+				{
+					$value = $value.$k."='".$v."'";
+				}
+				else
+				{
+					$value = $value.$k."='".$v."',";
+				}
+				$count++;
+			}
+                // $this->query("INSERT INTO $table ($into) VALUES ($value)");  
+                 $this->query("update $table set {$value} where $this->value_ganti");
 	}
    function close()
   	{

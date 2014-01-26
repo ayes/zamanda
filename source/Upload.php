@@ -37,24 +37,24 @@ class Upload {
        
      
             if( $_FILES[$this->fieldname]["error"] == 0){ 
-             
+                
                 $this->nama_file = $_FILES[$this->fieldname]["name"]; 
                 $_FILES[$this->fieldname]["type"]; 
-                (($_FILES[$this->fieldname]["size"] / 1024)/1024); 
+                //(($_FILES[$this->fieldname]["size"] / 9024)/9024); 
                 $_FILES[$this->fieldname]["tmp_name"]; 
-                 
-                if(move_uploaded_file( $_FILES[$this->fieldname]["tmp_name"], $this->upload_dir . $_FILES[$this->fieldname]["name"])){ 
-                 
-                    return TRUE; 
-                 
-                } 
-                 
+                 move_uploaded_file( $_FILES[$this->fieldname]["tmp_name"], $this->upload_dir . $_FILES[$this->fieldname]["name"]);
+//                if(move_uploaded_file( $_FILES[$this->fieldname]["tmp_name"], $this->upload_dir . $_FILES[$this->fieldname]["name"])){ 
+//                 
+//                    return TRUE; 
+//                 
+//                } 
+//                 
             } else { 
              
                 //$_FILES[$this->fieldname]["error"]; 
-                return FALSE;
-             
-            } 
+               return FALSE;
+            
+           } 
              
         
      
